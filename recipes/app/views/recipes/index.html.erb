@@ -1,0 +1,8 @@
+<h1> Welcome to the BEST CookBook</h1>
+
+	<% @recipes.each do |recipe| %>
+
+	<h2><%= link_to recipe.name, recipe %></h2>
+	<h3>by <%= recipe.ingredients %></h3>
+	<%= recipe.instructions %>
+	<% end %>
