@@ -6,3 +6,10 @@
 	<h3>by <%= recipe.ingredients %></h3>
 	<%= recipe.instructions %>
 	<% end %>
+
+  <h3>Add a new recipe here:</h3>
+  <input type="text" id="newName" placeholder="New Recipe Name" require>
+  <input type="text" id="newIngredients" placeholder="Recipe Ingredients" require>
+  <input type="text" id="newInstructions" placeholder="Recipe Instructions" require>
+  
+  <button id = "addNewPet">ADD IT!</button>

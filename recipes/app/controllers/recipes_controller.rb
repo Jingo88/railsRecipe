@@ -4,45 +4,48 @@ class RecipesController < ApplicationController
 	
 	def index
 		@recipes = Recipe.all
-	end
-
-	def new
-		@recipe = Recipe.new
+		respond_to do |format|
+			format.html { render :index }
+			format.json { render json: @recipes }
+		end
 	end
 
 	def create
 		@recipe = Recipe.create(recipe_params)
-		redirect_to @entry
+		
+		if @recipe.save
+			render json: @recipe
+		else
+			render status: 404, nothing: true
+		end
 	end
 
 	def show
 		@recipe = Recipe.find_by(id: params[:id])
 
-		@user = User.find_by(id: session[:user_id])
-
-    	if @user
-    		render :show
+    	if @recipe
+    		render json: @recipe
     	else
-    		redirect_to '/login'
+    		render status: 404, nothing: true
     	end
 	end
 
 	def destroy
 		@recipe = Recipe.find_by(id: params[:id])
-		@recipe.destroy
-
-		redirect_to recipes_path
-	end
-
-	def edit
-		@recipe = Recipe.find_by(id: params[:id])
+		if @recipe.destroy
+			render json: {}
+		else
+			render status: 400, nothing: true
+		end
 	end
 
 	def update
 		@recipe = recipe.find_by(id: params[:id])
-		@recipe.update_attributes(recipe_params)
-
-		redirect_to @recipe
+		if @recipe.update(recipe_params)
+			render json: @recipe
+		else
+			render status: 400, nothing: true
+		end
 	end
 
 	private
